@@ -1,0 +1,23 @@
+2025-12-01 07:42:31,107 - my_app - INFO - preparation for before engine
+2025-12-01 07:42:31,107 - my_app - INFO - doing enginization......
+2025-12-01 07:42:31,107 - my_app - INFO - exectue task [playbook_execution] on [all] started, msg: []
+2025-12-01 07:42:31,107 - my_app - INFO - exectue task [playbook_execution] on [all] started, msg: []
+2025-12-01 07:42:32,407 - my_app - INFO - exectue task [valicate var test_a] on [agent] ok, msg: [changed:False;msg:hello world]
+2025-12-01 07:42:32,407 - my_app - INFO - exectue task [valicate var test_a] on [agent] ok, msg: [changed:False;msg:hello world]
+2025-12-01 07:42:32,497 - my_app - INFO - exectue task [print vars in group_var orin_x] on [agent] ok, msg: [changed:False;msg:hello orin_x_a]
+2025-12-01 07:42:32,497 - my_app - INFO - exectue task [print vars in group_var orin_x] on [agent] ok, msg: [changed:False;msg:hello orin_x_a]
+2025-12-01 07:42:32,988 - my_app - INFO - exectue task [Ensure the directory /tmp/directory exists] on [agent] ok, msg: [changed:True]
+2025-12-01 07:42:32,988 - my_app - INFO - exectue task [Ensure the directory /tmp/directory exists] on [agent] ok, msg: [changed:True]
+2025-12-01 07:42:33,747 - my_app - INFO - exectue task [Copy /enginization/envs/test.env from controller to taijia] on [agent] ok, msg: [changed:True]
+2025-12-01 07:42:33,747 - my_app - INFO - exectue task [Copy /enginization/envs/test.env from controller to taijia] on [agent] ok, msg: [changed:True]
+2025-12-01 07:42:34,185 - my_app - INFO - exectue task [Set env for taijia and test env out] on [agent] failed, msg: [changed:True;rc:127;msg:non-zero return code]
+2025-12-01 07:42:34,186 - my_app - INFO - exectue task [Set env for taijia and test env out] on [agent] failed, msg: [changed:True;rc:127;msg:non-zero return code]
+2025-12-01 07:42:34,513 - my_app - INFO - exectue task [Clean dir /tmp/test after setting envs failed] on [agent] ok, msg: [changed:True]
+2025-12-01 07:42:34,513 - my_app - INFO - exectue task [Clean dir /tmp/test after setting envs failed] on [agent] ok, msg: [changed:True]
+2025-12-01 07:42:34,541 - my_app - INFO - exectue task [Show stdout after envs are setted successfully] on [agent] skipped, msg: []
+2025-12-01 07:42:34,541 - my_app - INFO - exectue task [Show stdout after envs are setted successfully] on [agent] skipped, msg: []
+2025-12-01 07:42:34,637 - my_app - INFO - exectue task [Show stderr after envs are setted successfully] on [agent] failed, msg: [changed:False;msg:abnormal log here. /bin/sh: 1: source: not found]
+2025-12-01 07:42:34,637 - my_app - INFO - exectue task [Show stderr after envs are setted successfully] on [agent] failed, msg: [changed:False;msg:abnormal log here. /bin/sh: 1: source: not found]
+2025-12-01 07:42:34,806 - my_app - INFO - exectue task [playbook_execution] on [all] failed, msg: [rc:2]
+2025-12-01 07:42:34,806 - my_app - INFO - exectue task [playbook_execution] on [all] failed, msg: [rc:2]
+2025-12-01 07:42:34,806 - my_app - INFO - preparation for after engine
