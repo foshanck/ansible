@@ -1,0 +1,80 @@
+- name: print vars in group_var all
+  debug:
+    msg: "{{ test_a }}"
+
+- name: print vars in group_var orin_x
+  debug:
+    msg: "{{ orin_x_a }}"
+      
+- name: Ensure the directory /tmp/directory exists
+  ansible.builtin.file:
+    path: /tmp/test
+    state: directory
+    mode: '0755'  
+
+- name: 拷贝文件并设置权限
+  ansible.builtin.copy:
+    src: /enginization/envs/test.env
+    dest: /tmp/test/test.env
+
+- name: 测试环境变量
+  shell: 'source /tmp/test/test.env && echo $MLAB_FLOW_DIR'
+  args:
+    executable: /bin/bash
+  register: result
+
+- name: print command result
+  debug:
+    msg: "Current result is {{ result.stdout }}"
+
+
+- name: 任务A - 尝试执行一个可能失败的操作
+  shell: "source /etc/profile"
+  register: shell_result 
+  ignore_errors: yes  # 防止命令执行失败导致整个Playbook中止
+
+- name: 执行固定逻辑B - 记录状态或执行修复
+  debug:
+    msg: "Execute shell failed..."
+  when: shell_result.rc != 0  # 当返回码不为0（即服务未运行）时执行
+  # 这里可以替换为实际的修复任务，如启动服务、发送通知等
+
+- name: 继续顺序执行其他逻辑C
+  debug:
+    msg: "继续执行主要流程..."
+  # 无论服务状态如何，这个任务都会按顺序执行
+
+- name: block - rescue - aways
+  block:
+    - name: 任务A - 尝试执行一个可能失败的操作
+      shell: 'source /tmp/test/test.env && echo $MLAB_FLOW_DIR'
+#      args:
+#       executable: /bin/bash
+      register: cmd_result
+
+  rescue:
+    - name: 固定逻辑B - 错误修复流程
+      debug:
+        msg: "任务A执行失败，正在执行错误恢复程序..."
+      # 此处可包含一系列恢复任务，如回滚、清理、告警
+
+  always:
+    - name: 任务C - 总是执行的后继逻辑
+      debug:
+        msg: "无论块中的任务成功与否，都会执行此步骤。"
+
+- name: 任务A - 修改某个配置
+  shell: 'source /tmp/test/test.env && echo $MLAB_FLOW_DIR'
+#  args:
+#    executable: /bin/bash
+  register: handler_result
+  ignore_errors: yes  # 防止命令执行失败导致整个Playbook中止
+  notify: test_handler  # 当配置文件确实被更改时，通知handler
+
+- name: 立即刷新处理程序
+  meta: flush_handlers  # 关键步骤：让Ansible在此处立刻运行所有被通知的handler
+
+- name: 任务C - 继续后续任务
+  debug:
+    msg: "Handler已执行完毕，继续后续工作。"
+

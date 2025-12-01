@@ -1,0 +1,52 @@
+- name: valicate var test_a
+  debug:
+    msg: "{{ test_a }}"
+
+- name: print vars in group_var orin_x
+  debug:
+    msg: "{{ orin_x_a }}"
+      
+- name: Ensure the directory /tmp/directory exists
+  ansible.builtin.file:
+    path: /tmp/test
+    state: directory
+    mode: '0755'  
+
+- name: Copy /enginization/envs/test.env from controller to taijia
+  ansible.builtin.copy:
+    src: /enginization/envs/test.env
+    dest: /tmp/test/test.env
+
+
+- name: block - rescue - aways
+  block:
+    - name:  Set env for taijia and test env out
+      shell: 'source /tmp/test/test.env && echo $MLAB_FLOW_DIR'
+#      args:
+#        executable: /bin/bash
+      register: cmd_result
+      until: cmd_result.rc == 0 
+      retries: 0 
+      delay: 3
+
+
+  rescue:
+    - name: Clean dir /tmp/test after setting envs failed
+      file: 
+        path: "/tmp/test"
+        state: absent
+      changed_when: true
+#      notify: test_handler
+
+  always:
+    - name: Show stdout after envs are setted successfully
+      debug:
+        msg: "normal log here. {{ cmd_result.stdout  }}"
+      when: cmd_result.rc == 0
+
+    - name: Show stderr after envs are setted successfully
+      fail:
+        msg: "abnormal log here. {{ cmd_result.stderr  }}"
+      when: cmd_result.rc != 0
+
+

@@ -1,0 +1,4 @@
+---
+- name: Execute Model Enginization
+  ansible.builtin.import_playbook: playbooks/enginization.yml
+
